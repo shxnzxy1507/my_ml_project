@@ -4,6 +4,7 @@ pipeline {
     environment {
         PYTHON_VERSION = '3.8'  // Set your Python version
         VENV = 'venv'
+        OUTPUT_FILE = 'output.txt'  // Specify the desired output file
     }
 
     stages {
@@ -39,7 +40,18 @@ pipeline {
             steps {
                 script {
                     // Run your ML script
-                    sh "python src/my_ml_script.py"
+                    sh "python src/my_ml_script.py > ${OUTPUT_FILE}"
+                }
+            }
+        }
+
+        stage('Deployment') {
+            steps {
+                script {
+                    // Upload the output file to a desired location (e.g., S3, FTP, etc.)
+                    // This is just an example; you may need to replace this with your actual deployment step.
+                    sh "cp ${OUTPUT_FILE} D:/LAB7/${OUTPUT_FILE}"
+
                 }
             }
         }
@@ -52,3 +64,4 @@ pipeline {
         }
     }
 }
+
