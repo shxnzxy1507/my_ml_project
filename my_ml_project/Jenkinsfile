@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    environment {
+        PYTHON_VERSION = '3.8'  // Set your Python version
+        VENV = 'venv'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Set Up Python') {
+            steps {
+                script {
+                    // Set up virtual environment
+                    sh "python${PYTHON_VERSION} -m venv ${VENV}"
+                    // Activate virtual environment
+                    sh "source ${VENV}/bin/activate"
+                    // Install dependencies
+                    sh "pip install -r requirements.txt"
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    // Run tests using pytest
+                    sh "pytest tests/"
+                }
+            }
+        }
+
+        stage('Run ML Script') {
+            steps {
+                script {
+                    // Run your ML script
+                    sh "python src/my_ml_script.py"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Deactivate virtual environment after execution
+            sh "deactivate"
+        }
+    }
+}
