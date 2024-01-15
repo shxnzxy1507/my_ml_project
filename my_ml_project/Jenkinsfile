@@ -50,7 +50,7 @@ pipeline {
                 script {
                     // Upload the output file to a desired location (e.g., S3, FTP, etc.)
                     // This is just an example; you may need to replace this with your actual deployment step.
-                    sh "cp ${OUTPUT_FILE} D:/LAB7/${OUTPUT_FILE}"
+                    sh "cp ${OUTPUT_FILE} D:/LAB7/my_ml_project/${OUTPUT_FILE}"
 
                 }
             }
