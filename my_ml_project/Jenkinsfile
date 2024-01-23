@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        PYTHON_VERSION = '3.10'  // Set your Python version
+        PYTHON_VERSION = '3.10'
         VENV = 'venv'
-        OUTPUT_FILE = 'output.txt'  // Specify the desired output file
+        OUTPUT_FILE = 'output.txt'
     }
 
     stages {
@@ -18,13 +18,13 @@ pipeline {
             steps {
                 script {
                     // Set up virtual environment
-                    bat "python -m venv ${VENV}"
+                    sh "python -m venv ${VENV}"
                     
                     // Activate virtual environment
-                    bat "${VENV}\\Scripts\\activate"
+                    sh "source ${VENV}/bin/activate"
                     
                     // Install dependencies
-                    bat "pip install -r requirements.txt"
+                    sh "pip install -r requirements.txt"
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     // Run tests using pytest
-                    bat "pytest tests/"
+                    sh "pytest tests/"
                 }
             }
         }
@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     // Run your ML script
-                    bat "python src/my_ml_script.py > ${OUTPUT_FILE}"
+                    sh "python src/my_ml_script.py > ${OUTPUT_FILE}"
                 }
             }
         }
@@ -50,9 +50,8 @@ pipeline {
         stage('Deployment') {
             steps {
                 script {
-                    // Upload the output file to a desired location (e.g., S3, FTP, etc.)
-                    // This is just an example; you may need to replace this with your actual deployment step.
-                    bat "cp ${OUTPUT_FILE} D:/LAB7/my_ml_project/${OUTPUT_FILE}"
+                    // Upload the output file to a desired location
+                    sh "cp ${OUTPUT_FILE} D:/LAB7/my_ml_project/${OUTPUT_FILE}"
                 }
             }
         }
@@ -61,10 +60,13 @@ pipeline {
     post {
         always {
             // Deactivate virtual environment after execution
-            bat "${VENV}\\Scripts\\deactivate"
+            script {
+                sh "deactivate"
+            }
         }
     }
 }
+
 
 
 
