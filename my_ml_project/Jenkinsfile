@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Run tests using pytest within the virtual environment
-                    sh "${VENV}/bin/pytest tests/"
+                    sh "source ${VENV}/bin/activate && pytest tests/"
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     // Run your ML script within the virtual environment
-                    sh "${VENV}/bin/python src/my_ml_script.py > ${OUTPUT_FILE}"
+                    sh "source ${VENV}/bin/activate && python src/my_ml_script.py > ${OUTPUT_FILE}"
                 }
             }
         }
@@ -63,11 +63,12 @@ pipeline {
         always {
             // Deactivate virtual environment after execution
             script {
-                sh "deactivate || true"
+                sh "source ${VENV}/bin/deactivate || true"
             }
         }
     }
 }
+
 
 
 
