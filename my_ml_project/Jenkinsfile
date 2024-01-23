@@ -13,23 +13,22 @@ pipeline {
             }
         }
 
-stage('Set Up Python') {
-    steps {
-        script {
-            sh 'sudo apt-get update'
-            sh 'sudo apt-get install -y python3 python3-venv'
-            sh 'python3 -m venv venv'
-            sh '. venv/bin/activate'
+        stage('Set Up Python') {
+            steps {
+                script {
+                    sh 'sudo apt-get update'
+                    sh 'sudo apt-get install -y python3 python3-venv'
+                    sh 'python3 -m venv venv'
+                    sh '. venv/bin/activate'
+                }
+            }
         }
-    }
-}
-
 
         stage('Run Tests') {
             steps {
                 script {
-                    // Run tests using pytest within the virtual environment
-                    sh "source ${VENV}/bin/activate && pytest tests/"
+                    // Run your tests using pytest
+                    sh 'bash -c "source venv/bin/activate && pytest tests"'
                 }
             }
         }
@@ -62,6 +61,7 @@ stage('Set Up Python') {
         }
     }
 }
+
 
 
 
