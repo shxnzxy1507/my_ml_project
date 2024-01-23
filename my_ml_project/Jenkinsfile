@@ -30,12 +30,12 @@ pipeline {
                     sh 'sudo apt-get install -y python3-pip'
 
                     // Install pytest in the virtual environment
-                    sh 'bash -c ". venv/bin/activate && python -m pip install pytest"'
+                    sh 'bash -c "source venv/bin/activate && python -m pip install pytest"'
 
                     // Set the working directory to the project root
                     dir('my_ml_project') {
                         // Run your tests using pytest
-                        sh 'bash -c ". venv/bin/activate && python -m pytest tests"'
+                        sh 'source ../venv/bin/activate && python -m pytest tests'
                     }
                 }
             }
@@ -69,6 +69,7 @@ pipeline {
         }
     }
 }
+
 
 
 
