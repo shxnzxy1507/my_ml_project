@@ -33,8 +33,8 @@ pipeline {
                     // Install pytest in the virtual environment
                     sh 'bash -c "source venv/bin/activate && python -m pip install pytest"'
 
-                    // Run your tests using pytest
-                    sh 'bash -c "source venv/bin/activate && pytest tests"'
+                    // Run your tests using pytest from the 'my_ml_project' directory
+                    sh 'bash -c "source venv/bin/activate && pytest my_ml_project/tests"'
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
             steps {
                 script {
                     // Run your ML script within the virtual environment
-                    sh "source ${VENV}/bin/activate && python src/my_ml_script.py > ${OUTPUT_FILE}"
+                    sh "source ${VENV}/bin/activate && python my_ml_project/src/my_ml_script.py > ${OUTPUT_FILE}"
                 }
             }
         }
@@ -67,6 +67,7 @@ pipeline {
         }
     }
 }
+
 
 
 
