@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        PYTHON_VERSION = '3.10'
         VENV = 'venv'
         OUTPUT_FILE = 'output.txt'
     }
@@ -18,10 +17,10 @@ pipeline {
             steps {
                 script {
                     // Install Python
-                    sh "sudo apt-get update -y"
+                    sh "sudo apt-get update"
                     sh "sudo apt-get install -y python3"
 
-                    // Set up virtual environment, activate, and install dependencies
+                    // Set up virtual environment and install dependencies
                     sh """
                         python3 -m venv ${VENV}
                         source ${VENV}/bin/activate
@@ -68,5 +67,6 @@ pipeline {
         }
     }
 }
+
 
 
