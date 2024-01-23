@@ -18,31 +18,27 @@ pipeline {
                 script {
                     sh 'sudo apt-get update'
                     sh 'sudo apt-get install -y python3 python3-venv'
-                    sh 'python3 -m venv venv'
+                    sh "python3 -m venv ${VENV}"
                 }
             }
         }
+
         stage('Run Tests') {
             steps {
                 script {
-                    // Set the working directory to the project root
                     dir('my_ml_project') {
-                        // Activate the virtual environment
-                        sh '. ../venv/bin/activate && pip install -r requirements.txt'
-
-                        // Run your tests using pytest
-                        sh '. ../venv/bin/activate && python -m pytest tests'
+                        sh ". ../${VENV}/bin/activate && python -m pytest tests"
                     }
                 }
             }
         }
 
-
         stage('Run ML Script') {
             steps {
                 script {
-                    // Run your ML script within the virtual environment
-                    sh "bash -c 'source venv/bin/activate && python my_ml_project/src/my_ml_script.py > ${OUTPUT_FILE}' || (echo 'Error running ML script: $?'; exit 1)"
+                    dir('my_ml_project') {
+                        sh "bash -c '. ../${VENV}/bin/activate && python src/my_ml_script.py > ${OUTPUT_FILE}' || (echo 'Error running ML script: \$?'; exit 1)"
+                    }
                 }
             }
         }
@@ -50,7 +46,6 @@ pipeline {
         stage('Deployment') {
             steps {
                 script {
-                    // Upload the output file to a desired location
                     sh "cp ${OUTPUT_FILE} D:/LAB7/my_ml_project/${OUTPUT_FILE}"
                 }
             }
@@ -59,13 +54,13 @@ pipeline {
         stage('Deactivate Virtual Environment') {
             steps {
                 script {
-                    // Deactivate virtual environment after execution
                     sh "deactivate || true"
                 }
             }
         }
     }
 }
+
 
 
 
