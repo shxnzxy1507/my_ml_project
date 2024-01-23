@@ -13,22 +13,17 @@ pipeline {
             }
         }
 
-        stage('Set Up Python') {
-            steps {
-                script {
-                    // Install Python and venv dependencies
-                    sh "sudo apt-get update"
-                    sh "sudo apt-get install -y python3 python3-venv"
-
-                    // Set up virtual environment and install dependencies
-                    sh """
-                        python3 -m venv ${VENV}
-                        source ${VENV}/bin/activate
-                        pip install -r requirements.txt
-                    """
-                }
-            }
+stage('Set Up Python') {
+    steps {
+        script {
+            sh 'sudo apt-get update'
+            sh 'sudo apt-get install -y python3 python3-venv'
+            sh 'python3 -m venv venv'
+            sh '. venv/bin/activate'
         }
+    }
+}
+
 
         stage('Run Tests') {
             steps {
