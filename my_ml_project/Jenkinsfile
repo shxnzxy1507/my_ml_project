@@ -33,8 +33,11 @@ pipeline {
                     // Install pytest in the virtual environment
                     sh 'bash -c "source venv/bin/activate && python -m pip install pytest"'
 
-                    // Run your tests using pytest from the 'my_ml_project' directory
-                    sh 'bash -c "source venv/bin/activate && pytest my_ml_project/tests"'
+                    // Set the working directory to the project root
+                    dir('my_ml_project') {
+                        // Run your tests using pytest
+                        sh 'bash -c "source venv/bin/activate && python -m pytest"'
+                    }
                 }
             }
         }
@@ -67,6 +70,7 @@ pipeline {
         }
     }
 }
+
 
 
 
