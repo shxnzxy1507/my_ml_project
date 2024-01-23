@@ -35,7 +35,8 @@ pipeline {
                     // Set the working directory to the project root
                     dir('my_ml_project') {
                         // Run your tests using pytest
-                        sh 'source ../venv/bin/activate && python -m pytest tests'
+                        sh 'source ../venv/bin/activate && python -m pytest my_ml_project/tests'
+
                     }
                 }
             }
