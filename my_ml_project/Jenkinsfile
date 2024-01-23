@@ -59,11 +59,12 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            // Deactivate virtual environment after execution
-            script {
-                sh "source ${VENV}/bin/deactivate || true"
+        stage('Deactivate Virtual Environment') {
+            steps {
+                script {
+                    // Deactivate virtual environment after execution
+                    sh ". ${VENV}/bin/deactivate || true"
+                }
             }
         }
     }
