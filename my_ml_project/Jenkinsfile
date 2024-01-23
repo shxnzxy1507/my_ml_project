@@ -19,7 +19,6 @@ pipeline {
                     sh 'sudo apt-get update'
                     sh 'sudo apt-get install -y python3 python3-venv'
                     sh 'python3 -m venv venv'
-                    sh '. venv/bin/activate'
                 }
             }
         }
@@ -31,12 +30,12 @@ pipeline {
                     sh 'sudo apt-get install -y python3-pip'
 
                     // Install pytest in the virtual environment
-                    sh 'bash -c "source venv/bin/activate && python -m pip install pytest"'
+                    sh 'bash -c ". venv/bin/activate && python -m pip install pytest"'
 
                     // Set the working directory to the project root
                     dir('my_ml_project') {
                         // Run your tests using pytest
-                        sh 'bash -c "source venv/bin/activate && python -m pytest"'
+                        sh 'bash -c ". venv/bin/activate && python -m pytest tests"'
                     }
                 }
             }
@@ -46,7 +45,7 @@ pipeline {
             steps {
                 script {
                     // Run your ML script within the virtual environment
-                    sh "source ${VENV}/bin/activate && python my_ml_project/src/my_ml_script.py > ${OUTPUT_FILE}"
+                    sh "bash -c '. venv/bin/activate && python my_ml_project/src/my_ml_script.py > ${OUTPUT_FILE}'"
                 }
             }
         }
@@ -70,6 +69,7 @@ pipeline {
         }
     }
 }
+
 
 
 
