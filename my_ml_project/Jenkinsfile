@@ -19,6 +19,7 @@ pipeline {
                     sh 'sudo apt-get update'
                     sh 'sudo apt-get install -y python3 python3-venv'
                     sh 'python3 -m venv venv'
+                    sh '. ${VENV}/bin/activate && pip install -r my_ml_project/requirements.txt'
                 }
             }
         }
@@ -51,6 +52,7 @@ pipeline {
         }
     }
 }
+
 
 
 
