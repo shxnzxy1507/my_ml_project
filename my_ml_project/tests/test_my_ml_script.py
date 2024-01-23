@@ -1,5 +1,5 @@
 import pytest
-from my_ml_script import my_ml_function
+from src.my_ml_script import my_ml_function
 
 def test_my_ml_function():
     # Assuming my_ml_function takes input X and returns predictions
