@@ -16,9 +16,9 @@ pipeline {
         stage('Set Up Python') {
             steps {
                 script {
-                    // Install Python
+                    // Install Python and venv dependencies
                     sh "sudo apt-get update"
-                    sh "sudo apt-get install -y python3"
+                    sh "sudo apt-get install -y python3 python3-venv"
 
                     // Set up virtual environment and install dependencies
                     sh """
@@ -67,6 +67,7 @@ pipeline {
         }
     }
 }
+
 
 
 
