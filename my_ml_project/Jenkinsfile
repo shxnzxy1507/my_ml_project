@@ -18,11 +18,13 @@ pipeline {
             steps {
                 script {
                     // Set up virtual environment
-                    sh "python${PYTHON_VERSION} -m venv ${VENV}"
+                    bat "python -m venv ${VENV}"
+                    
                     // Activate virtual environment
-                    sh "source ${VENV}/bin/activate"
+                    bat "${VENV}\\Scripts\\activate"
+                    
                     // Install dependencies
-                    sh "pip install -r requirements.txt"
+                    bat "pip install -r requirements.txt"
                 }
             }
         }
@@ -31,7 +33,7 @@ pipeline {
             steps {
                 script {
                     // Run tests using pytest
-                    sh "pytest tests/"
+                    bat "pytest tests/"
                 }
             }
         }
@@ -40,7 +42,7 @@ pipeline {
             steps {
                 script {
                     // Run your ML script
-                    sh "python src/my_ml_script.py > ${OUTPUT_FILE}"
+                    bat "python src/my_ml_script.py > ${OUTPUT_FILE}"
                 }
             }
         }
@@ -50,8 +52,7 @@ pipeline {
                 script {
                     // Upload the output file to a desired location (e.g., S3, FTP, etc.)
                     // This is just an example; you may need to replace this with your actual deployment step.
-                    sh "cp ${OUTPUT_FILE} D:/LAB7/my_ml_project/${OUTPUT_FILE}"
-
+                    bat "cp ${OUTPUT_FILE} D:/LAB7/my_ml_project/${OUTPUT_FILE}"
                 }
             }
         }
@@ -60,8 +61,9 @@ pipeline {
     post {
         always {
             // Deactivate virtual environment after execution
-            sh "deactivate"
+            bat "deactivate"
         }
     }
 }
+
 
