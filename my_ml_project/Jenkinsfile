@@ -41,7 +41,7 @@ pipeline {
                 script {
                     dir('my_ml_project') {
                         sh """
-                        source ${VENV}/bin/activate
+                        . ${VENV}/bin/activate
                         python3 src/my_ml_script.py > ${OUTPUT_FILE} || (echo 'Error running ML script: \$?'; exit 1)
                         """
                     }
