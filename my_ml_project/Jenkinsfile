@@ -23,19 +23,25 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Install Dependencies') {
             steps {
                 script {
                     // Ensure pip is installed
                     sh 'sudo apt-get install -y python3-pip'
 
-                    // Install pytest in the virtual environment
-                    sh 'bash -c "source venv/bin/activate && python -m pip install pytest"'
+                    // Install dependencies from requirements.txt in the virtual environment
+                    sh 'bash -c "source venv/bin/activate && python -m pip install -r my_ml_project/requirements.txt"'
+                }
+            }
+        }
 
+        stage('Run Tests') {
+            steps {
+                script {
                     // Set the working directory to the project root
                     dir('my_ml_project') {
-                        // Run your tests using pytest
-                        sh '. ../venv/bin/activate && python -m pytest tests'
+                        // Activate the virtual environment and run your tests using pytest
+                        sh 'source ../venv/bin/activate && python -m pytest tests'
                     }
                 }
             }
@@ -45,7 +51,7 @@ pipeline {
             steps {
                 script {
                     // Run your ML script within the virtual environment
-                    sh "bash -c '. venv/bin/activate && python my_ml_script.py > ${OUTPUT_FILE}'"
+                    sh "bash -c '. venv/bin/activate && python my_ml_project/src/my_ml_script.py > ${OUTPUT_FILE}'"
                 }
             }
         }
