@@ -24,17 +24,19 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                script {
-                    // Install pytest in the virtual environment
-                    sh 'pip install pytest'
-                    
-                    // Run your tests using pytest
-                    sh 'bash -c "source venv/bin/activate && pytest tests"'
-                }
-            }
+stage('Run Tests') {
+    steps {
+        script {
+            // Ensure pip is installed
+            sh 'sudo apt-get install -y python3-pip'
+
+            // Install pytest in the virtual environment
+            sh 'bash -c "source venv/bin/activate && python -m pip install pytest"'
+
+            // Run your tests using pytest
+            sh 'bash -c "source venv/bin/activate && pytest tests"'
         }
+ 
 
         stage('Run ML Script') {
             steps {
