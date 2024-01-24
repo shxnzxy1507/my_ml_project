@@ -21,7 +21,7 @@ pipeline {
                 script {
                     // Create a virtual environment
                     sh "$PYTHON_EXECUTABLE -m venv venv"
-                    sh 'source venv/bin/activate'
+                    sh '. venv/bin/activate' // Use dot instead of source
                     sh 'pip install numpy scikit-learn'
                 }
             }
@@ -48,6 +48,7 @@ pipeline {
         }
     }
 }
+
 
 
 
