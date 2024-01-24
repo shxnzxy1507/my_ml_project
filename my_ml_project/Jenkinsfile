@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Set the path to your Python executable
-        PYTHON_EXECUTABLE = '/path/to/your/python/executable'
+        PYTHON_EXECUTABLE = '/usr/bin/python3'
     }
 
     stages {
