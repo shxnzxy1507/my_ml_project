@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     // Navigate to the test directory and run the tests
-                    dir('my_ml_project/test') {
+                    dir('my_ml_project/tests') {
                         sh "$PYTHON_EXECUTABLE -m pytest"
                     }
                 }
