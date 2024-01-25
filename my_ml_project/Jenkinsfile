@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        // Set the path to your Python executable
         PYTHON_EXECUTABLE = '/usr/bin/python3'
     }
 
@@ -9,6 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
+                    // Checkout the code from your Git repository
                     checkout scm
                 }
             }
@@ -17,19 +19,20 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 script {
+                    // Create a virtual environment
                     sh "$PYTHON_EXECUTABLE -m venv venv"
-                    sh '. venv/bin/activate'
-                    sh 'pip install numpy scikit-learn joblib'
+                    sh '. venv/bin/activate' // Use dot instead of source
+                    sh 'pip install numpy scikit-learn'
                 }
             }
         }
 
-        stage('Run script and Save Model Locally') {
+        stage('Run script') {
             steps {
                 script {
+                    // Navigate to the src directory and run the script
                     dir('my_ml_project/src') {
                         sh "$PYTHON_EXECUTABLE my_ml_script.py"
-                        sh "$PYTHON_EXECUTABLE save_model.py"
                     }
                 }
             }
@@ -39,11 +42,13 @@ pipeline {
     post {
         always {
             script {
+                // Clean up, deactivate virtual environment
                 sh 'deactivate || true'
             }
         }
     }
 }
+
 
 
 
