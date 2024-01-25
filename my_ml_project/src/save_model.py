@@ -6,7 +6,7 @@ model = LinearRegression()
 model = joblib.load('my_trained_model.joblib')
 
 # Save the model to an explicit path
-model_filename = '/my_ml_project/src/my_trained_model.joblib'
+model_filename = 'my_ml_project/src/my_trained_model.joblib'
 joblib.dump(model, model_filename)
 
 print(f'Model saved locally: {model_filename}')
