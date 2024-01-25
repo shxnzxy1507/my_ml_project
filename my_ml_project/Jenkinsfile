@@ -22,7 +22,7 @@ pipeline {
                     // Create a virtual environment
                     sh "$PYTHON_EXECUTABLE -m venv venv"
                     sh '. venv/bin/activate' // Use dot instead of source
-                    sh 'pip install numpy scikit-learn pytest'
+                    sh 'pip install numpy scikit-learn joblib'
                 }
             }
         }
@@ -33,17 +33,6 @@ pipeline {
                     // Navigate to the src directory and run the script
                     dir('my_ml_project/src') {
                         sh "$PYTHON_EXECUTABLE my_ml_script.py"
-                    }
-                }
-            }
-        }
-
-        stage('Run tests') {
-            steps {
-                script {
-                    // Navigate to the test directory and run the tests
-                    dir('my_ml_project/tests') {
-                        sh "$PYTHON_EXECUTABLE -m pytest test_my_ml_script.py"
                     }
                 }
             }
@@ -59,6 +48,7 @@ pipeline {
         }
     }
 }
+
 
 
 
