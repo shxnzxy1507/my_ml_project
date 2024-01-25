@@ -12,7 +12,7 @@ model_filename = 'my_trained_model.joblib'
 joblib.dump(model, model_filename)
 
 # Upload the model to an AWS S3 bucket
-bucket_name = 'your-s3-bucket-name'
+bucket_name = 'jenkinsbucketalnafiprac'
 s3_key = 'models/my_trained_model.joblib'  # Adjust the path and filename as needed
 
 # AWS S3 credentials and region
