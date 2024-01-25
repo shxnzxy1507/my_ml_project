@@ -27,13 +27,13 @@ pipeline {
             }
         }
 
-        stage('Run script') {
+        stage('Run script and save model locally') {
             steps {
                 script {
                     // Navigate to the src directory and run the script
                     dir('my_ml_project/src') {
                         sh "$PYTHON_EXECUTABLE my_ml_script.py"
-                        sh
+                        sh "$PYTHON_EXECUTABLE save_model.py"
                     }
                 }
             }
