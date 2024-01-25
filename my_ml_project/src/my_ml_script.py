@@ -1,9 +1,9 @@
-# Import necessary libraries
+# my_ml_script.py
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
-import joblib  # Import joblib for model serialization
+import joblib
 
 # Generate a small dataset
 np.random.seed(42)
@@ -19,9 +19,9 @@ model = LinearRegression()
 # Train the model on the training set
 model.fit(X_train, y_train)
 
-# Save the trained model to a file in the src folder
+# Save the trained model to a file in the same directory
 model_filename = 'my_trained_model.joblib'
-joblib.dump(model, f'my_ml_project/src/{model_filename}')
+joblib.dump(model, model_filename)
 
 # Make predictions on the test set
 predictions = model.predict(X_test)
@@ -29,3 +29,4 @@ predictions = model.predict(X_test)
 # Evaluate the model performance
 mse = mean_squared_error(y_test, predictions)
 print(f'Mean Squared Error: {mse}')
+
