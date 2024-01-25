@@ -1,9 +1,8 @@
-# my_ml_script.py
+# Import necessary libraries
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
-import joblib
 
 # Generate a small dataset
 np.random.seed(42)
@@ -18,10 +17,6 @@ model = LinearRegression()
 
 # Train the model on the training set
 model.fit(X_train, y_train)
-
-# Save the trained model to a file in the same directory
-model_filename = 'my_trained_model.joblib'
-joblib.dump(model, model_filename)
 
 # Make predictions on the test set
 predictions = model.predict(X_test)
