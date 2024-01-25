@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         PYTHON_EXECUTABLE = '/usr/bin/python3'
-        AWS_CLI_VERSION = '2.x.x'  // Specify the version of AWS CLI you want to install
     }
 
     stages {
@@ -25,34 +24,12 @@ pipeline {
             }
         }
 
-        stage('Install AWS CLI') {
-            steps {
-                script {
-                    sh 'curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"'
-                    sh 'unzip awscliv2.zip'
-                    sh "./aws/install -i /usr/local/aws-cli -b /usr/local/bin"
-                }
-            }
-        }
-
-        stage('Run script and Save Model') {
+        stage('Run script and Save Model Locally') {
             steps {
                 script {
                     dir('my_ml_project/src') {
                         sh "$PYTHON_EXECUTABLE my_ml_script.py"
                         sh "$PYTHON_EXECUTABLE save_model.py"
-                    }
-                }
-            }
-        }
-
-        stage('Deploy Model to S3') {
-            steps {
-                script {
-                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AKIAYZENMCSI3FMAMT4T', secretKeyVariable: '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', credentialsId: '63788670-2d55-40d1-8135-ea16b1349564']]) {
-                        
-                        // Upload the model to an AWS S3 bucket
-                        sh "aws s3 cp my_trained_model.joblib s3://jenkinsbucketalnafiprac/models/my_trained_model.joblib --region eu-north-1"
                     }
                 }
             }
@@ -67,6 +44,7 @@ pipeline {
         }
     }
 }
+
 
 
 
