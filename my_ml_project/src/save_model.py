@@ -3,15 +3,15 @@ import joblib
 from sklearn.linear_model import LinearRegression
 
 # Load the trained model
-model = LinearRegression()  # Initialize the model if necessary
+model = LinearRegression()
 model = joblib.load('my_trained_model.joblib')
 
-# Save the model to a file in the src folder within the my_ml_project directory
+# Save the model to a file in the same directory
 model_filename = 'my_trained_model.joblib'
-model_filepath = f'my_ml_project/src/{model_filename}'
-joblib.dump(model, model_filepath)
+joblib.dump(model, model_filename)
 
-print(f'Model saved locally: {model_filepath}')
+print(f'Model saved locally: {model_filename}')
+
 
 
 
